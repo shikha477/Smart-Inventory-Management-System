@@ -1,6 +1,7 @@
 const express = require("express");
 
 const router = express.Router();
+const authRoutes = require("./auth.routes");
 
 router.get("/health", (req, res) => {
   res.status(200).json({
@@ -8,5 +9,7 @@ router.get("/health", (req, res) => {
     message: "Smart Inventory API running 🚀",
   });
 });
+
+router.use("/auth", authRoutes);
 
 module.exports = router;

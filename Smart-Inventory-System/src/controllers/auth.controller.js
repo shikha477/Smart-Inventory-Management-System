@@ -5,7 +5,7 @@ const ApiError = require("../utils/ApiError");
 
 
 // REGISTER
-exports.registerUser = asyncHandler(async (req, res) => {
+exports.registerUser = asyncHandler(async (req, res,next) => {
 
   const { name, email, password } = req.body;
 
