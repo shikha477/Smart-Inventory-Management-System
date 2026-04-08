@@ -8,7 +8,7 @@ const ApiError = require("../utils/ApiError");
 // REGISTER
 exports.register = asyncHandler(async(req,res)=>{
 
-const {name,email,password} = req.body;
+const {name,email,password,role} = req.body;
 
 const userExists = await User.findOne({email});
 
@@ -21,7 +21,8 @@ const hashedPassword = await bcrypt.hash(password,10);
 const user = await User.create({
     name,
     email,
-    password:hashedPassword
+    password:hashedPassword,
+    role: role || "staff"
 });
 
 const token = generateToken(user._id);
