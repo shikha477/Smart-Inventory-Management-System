@@ -30,3 +30,28 @@ exports.registerUser = asyncHandler(async (req, res) => {
   });
 });
 
+// LOGIN
+exports.loginUser = asyncHandler(async (req, res) => {
+
+  const { email, password } = req.body;
+
+  const user = await User.findOne({ email }).select("+password");
+
+  if (!user) {
+    throw new ApiError(401, "Invalid credentials");
+  }
+
+  const isMatch = await user.comparePassword(password);
+
+  if (!isMatch) {
+    throw new ApiError(401, "Invalid credentials");
+  }
+
+  const token = generateToken(user._id);
+
+  res.json({
+    success: true,
+    token,
+    user
+  });
+});
