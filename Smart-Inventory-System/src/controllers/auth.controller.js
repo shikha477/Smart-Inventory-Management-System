@@ -55,3 +55,25 @@ exports.loginUser = asyncHandler(async (req, res) => {
     user
   });
 });
+
+// Logout
+exports.logoutUser = asyncHandler(async (req, res) => {
+
+  res.json({
+    success: true,
+    message: "Logged out successfully"
+  });
+
+});
+
+// Get current user
+exports.getCurrentUser = asyncHandler(async (req, res) => {
+
+  const user = await User.findById(req.user.id);
+
+  res.json({
+    success: true,
+    user
+  });
+
+});
