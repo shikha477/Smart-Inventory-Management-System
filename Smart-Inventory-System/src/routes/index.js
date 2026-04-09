@@ -13,7 +13,11 @@ message:"Smart Inventory API running 🚀"
 });
 
 router.use("/auth",authRoutes);
-
 router.use("/users",userRoutes);
+
+router.use("/products", require("./product.routes"));
+router.use("/suppliers", require("./supplier.routes"));
+router.use("/analytics", require("./analytics.routes"));
+router.use("/bills", require("./billing.routes"));
 
 module.exports = router;

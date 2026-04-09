@@ -4,13 +4,13 @@ const router = express.Router();
 const auth = require("../middleware/auth.middleware");
 const role = require("../middleware/role.middleware");
 
-const { createBill } = require("../controllers/billing.controller");
+const { getAnalytics } = require("../controllers/analytics.controller");
 
-router.post(
+router.get(
   "/",
   auth,
-  role("admin", "staff"),
-  createBill
+  role("admin"),
+  getAnalytics
 );
 
 module.exports = router;
