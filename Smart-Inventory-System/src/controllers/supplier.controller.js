@@ -14,3 +14,16 @@ exports.createSupplier = asyncHandler(async (req, res) => {
     });
 
 });
+
+
+exports.getSuppliers = asyncHandler(async (req, res) => {
+
+    const suppliers = await Supplier.find().sort({ createdAt: -1 });
+
+    res.json({
+        success: true,
+        count: suppliers.length,
+        data: suppliers
+    });
+
+});
