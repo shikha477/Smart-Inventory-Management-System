@@ -28,6 +28,7 @@ exports.getSuppliers = asyncHandler(async (req, res) => {
 
 });
 
+
 exports.getSupplierById = asyncHandler(async (req, res) => {
 
     const supplier = await Supplier.findById(req.params.id);
@@ -42,6 +43,7 @@ exports.getSupplierById = asyncHandler(async (req, res) => {
     });
 
 });
+
 
 exports.updateSupplier = asyncHandler(async (req, res) => {
 
@@ -58,6 +60,43 @@ exports.updateSupplier = asyncHandler(async (req, res) => {
     res.json({
         success: true,
         data: supplier
+    });
+
+});
+
+
+exports.deleteSupplier = asyncHandler(async (req, res) => {
+
+    const supplier = await Supplier.findById(req.params.id);
+
+    if (!supplier) {
+        throw new ApiError(404, "Supplier not found");
+    }
+
+    await supplier.deleteOne();
+
+    res.json({
+        success: true,
+        message: "Supplier deleted successfully"
+    });
+
+});
+
+
+exports.getSupplierProducts = asyncHandler(async (req, res) => {
+
+    const supplier = await Supplier.findById(req.params.id);
+
+    if (!supplier) {
+        throw new ApiError(404, "Supplier not found");
+    }
+
+    const products = await Product.find({ supplier: supplier._id });
+
+    res.json({
+        success: true,
+        count: products.length,
+        data: products
     });
 
 });
