@@ -27,3 +27,18 @@ exports.getSuppliers = asyncHandler(async (req, res) => {
     });
 
 });
+
+exports.getSupplierById = asyncHandler(async (req, res) => {
+
+    const supplier = await Supplier.findById(req.params.id);
+
+    if (!supplier) {
+        throw new ApiError(404, "Supplier not found");
+    }
+
+    res.json({
+        success: true,
+        data: supplier
+    });
+
+});
