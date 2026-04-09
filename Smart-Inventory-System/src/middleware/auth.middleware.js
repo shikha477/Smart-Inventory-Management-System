@@ -1,31 +1,41 @@
 const jwt = require("jsonwebtoken");
 const User = require("../models/user.model");
-const asyncHandler = require("../utils/asyncHandler");
-const ApiError = require("../utils/ApiError");
 
-const protect = asyncHandler(async(req,res,next)=>{
+const authMiddleware = async (req, res, next) => {
+  try {
 
-let token;
+    const authHeader = req.headers.authorization;
 
-if(
-    req.headers.authorization &&
-    req.headers.authorization.startsWith("Bearer")
-){
+    if (!authHeader || !authHeader.startsWith("Bearer")) {
+      return res.status(401).json({
+        success: false,
+        message: "No token provided"
+      });
+    }
 
-token = req.headers.authorization.split(" ")[1];
+    const token = authHeader.split(" ")[1];
 
-}
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-if(!token){
-    throw new ApiError(401,"Not authorized");
-}
+    const user = await User.findById(decoded.id).select("-password");
 
-const decoded = jwt.verify(token,process.env.JWT_SECRET);
+    if (!user) {
+      return res.status(401).json({
+        success: false,
+        message: "User not found"
+      });
+    }
 
-req.user = await User.findById(decoded.id).select("-password");
+    req.user = user;
 
-next();
+    next();
 
-});
+  } catch (error) {
+    return res.status(401).json({
+      success: false,
+      message: "Invalid token"
+    });
+  }
+};
 
-module.exports = protect;
+module.exports = authMiddleware;

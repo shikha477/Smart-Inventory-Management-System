@@ -1,18 +1,17 @@
 const express = require("express");
-
 const router = express.Router();
 
-const protect = require("../middleware/auth.middleware");
-const authorizeRoles = require("../middleware/role.middleware");
+const billingController = require("../controllers/billing.controller");
 
-const { createBill } = require("../controllers/billing.controller");
+const authMiddleware = require("../middleware/auth.middleware");
+const roleMiddleware = require("../middleware/role.middleware");
 
 
 router.post(
 "/",
-protect,
-authorizeRoles("admin","staff"),
-createBill
+authMiddleware,
+roleMiddleware("admin","staff"),
+billingController.createBill
 );
 
 module.exports = router;
