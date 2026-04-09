@@ -1,17 +1,16 @@
 const express = require("express");
 const router = express.Router();
 
-const productController = require("../controllers/product.controller");
+const auth = require("../middleware/auth.middleware");
+const role = require("../middleware/role.middleware");
 
-const authMiddleware = require("../middleware/auth.middleware");
-const roleMiddleware = require("../middleware/role.middleware");
-
+const { deleteProduct } = require("../controllers/product.controller");
 
 router.delete(
-"/:id",
-authMiddleware,
-roleMiddleware("admin"),
-productController.deleteProduct
+  "/:id",
+  auth,
+  role("admin"),
+  deleteProduct
 );
 
 module.exports = router;
