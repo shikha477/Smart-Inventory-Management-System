@@ -1,21 +1,18 @@
-const ApiError = require("../utils/ApiError");
+const roleMiddleware = (...allowedRoles) => {
 
-const authorizeRoles = (...roles) => {
+  return (req, res, next) => {
 
-return (req,res,next)=>{
+    const userRole = req.user.role;
 
-if(!roles.includes(req.user.role)){
-    throw new ApiError(
-        403,
-        `Access denied. Required role: ${roles.join(", ")}`
-    );
-}
+    if (!allowedRoles.includes(userRole)) {
+      return res.status(403).json({
+        success: false,
+        message: "Access denied"
+      });
+    }
 
-next();
-
+    next();
+  };
 };
 
-};
-
-module.exports = authorizeRoles;
-
+module.exports = roleMiddleware;
