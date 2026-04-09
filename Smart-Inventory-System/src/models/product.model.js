@@ -65,7 +65,7 @@ productSchema.pre("save", function(next) {
     this.isLowStock = false;
   }
 
-  next();
+//   next();
 });
 
 
