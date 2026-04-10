@@ -53,3 +53,17 @@ exports.createBill = asyncHandler(async (req, res) => {
     data: bill,
   });
 });
+
+exports.getBills = asyncHandler(async (req, res) => {
+  const bills = await Bill.find()
+    .populate("items.product", "name price")
+    .populate("createdBy", "name email")
+    .sort({ createdAt: -1 });
+
+  res.status(200).json({
+    success: true,
+    count: bills.length,
+    data: bills,
+  });
+});
+
