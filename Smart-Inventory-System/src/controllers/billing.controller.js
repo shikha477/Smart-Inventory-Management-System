@@ -67,3 +67,34 @@ exports.getBills = asyncHandler(async (req, res) => {
   });
 });
 
+
+exports.getBillById = asyncHandler(async (req, res) => {
+  const bill = await Bill.findById(req.params.id)
+    .populate("items.product", "name price")
+    .populate("createdBy", "name email");
+
+  if (!bill) {
+    throw new ApiError(404, "Bill not found");
+  }
+
+  res.status(200).json({
+    success: true,
+    data: bill,
+  });
+});
+
+
+exports.deleteBill = asyncHandler(async (req, res) => {
+  const bill = await Bill.findById(req.params.id);
+
+  if (!bill) {
+    throw new ApiError(404, "Bill not found");
+  }
+
+  await bill.deleteOne();
+
+  res.status(200).json({
+    success: true,
+    message: "Bill deleted successfully",
+  });
+});
