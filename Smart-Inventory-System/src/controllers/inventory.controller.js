@@ -2,8 +2,6 @@ const Product = require("../models/product.model");
 const Inventory = require("../models/inventory.model");
 const asyncHandler = require("../utils/asyncHandler");
 const ApiError = require("../utils/ApiError");
-const { checkLowStock } = require("./alert.controller");
-
 
 exports.addStock = asyncHandler(async (req, res) => {
 
@@ -84,7 +82,6 @@ exports.removeStock = asyncHandler(async (req, res) => {
   });
 });
 
-
 exports.getInventoryHistory = asyncHandler(async (req, res) => {
 
   const history = await Inventory.find()
@@ -98,7 +95,6 @@ exports.getInventoryHistory = asyncHandler(async (req, res) => {
     data: history,
   });
 });
-
 
 exports.getProductInventory = asyncHandler(async (req, res) => {
 
@@ -114,7 +110,6 @@ exports.getProductInventory = asyncHandler(async (req, res) => {
     data: history,
   });
 });
-
 
 exports.inventorySummary = asyncHandler(async (req, res) => {
 
@@ -139,53 +134,4 @@ exports.inventorySummary = asyncHandler(async (req, res) => {
       totalTransactions
     }
   });
-});
-
-exports.checkLowStock = async (productId) => {
-
-    const inventory = await Inventory.findOne({ product: productId }).populate("product");
-
-    if (!inventory) return;
-
-    if (inventory.quantity <= inventory.product.lowStockThreshold) {
-
-        const existingAlert = await Alert.findOne({
-            product: productId,
-            isRead: false
-        });
-
-        if (!existingAlert) {
-            await Alert.create({
-                product: productId,
-                message: `Low stock for product: ${inventory.product.name}`
-            });
-        }
-    }
-};
-
-
-exports.updateInventory = asyncHandler(async (req, res) => {
-
-    const { productId, quantity } = req.body;
-
-    const inventory = await Inventory.findOne({ product: productId });
-
-    if (!inventory) {
-        return res.status(404).json({
-            success: false,
-            message: "Inventory not found"
-        });
-    }
-
-    inventory.quantity = quantity;
-
-    await inventory.save();
-    await checkLowStock(productId);
-
-    res.status(200).json({
-        success: true,
-        message: "Inventory updated successfully",
-        data: inventory
-    });
-
 });
