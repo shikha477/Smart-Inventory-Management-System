@@ -97,3 +97,45 @@ exports.getInventoryHistory = asyncHandler(async (req, res) => {
     data: history,
   });
 });
+
+
+exports.getProductInventory = asyncHandler(async (req, res) => {
+
+  const productId = req.params.id;
+
+  const history = await Inventory.find({ product: productId })
+    .populate("product", "name")
+    .sort({ createdAt: -1 });
+
+  res.status(200).json({
+    success: true,
+    count: history.length,
+    data: history,
+  });
+});
+
+
+exports.inventorySummary = asyncHandler(async (req, res) => {
+
+  const totalProducts = await Product.countDocuments();
+
+  const totalStock = await Product.aggregate([
+    {
+      $group: {
+        _id: null,
+        total: { $sum: "$stock" }
+      }
+    }
+  ]);
+
+  const totalTransactions = await Inventory.countDocuments();
+
+  res.status(200).json({
+    success: true,
+    data: {
+      totalProducts,
+      totalStock: totalStock[0]?.total || 0,
+      totalTransactions
+    }
+  });
+});
