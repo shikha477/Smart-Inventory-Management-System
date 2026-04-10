@@ -17,7 +17,7 @@ exports.createProduct = asyncHandler(async (req, res) => {
     stock,
     reorderLevel,
     supplier,
-    sku: "TEST001"
+    sku:generateSKU() 
 
   });
 
