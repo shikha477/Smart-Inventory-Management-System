@@ -5,13 +5,14 @@ const userRoutes = require("./user.routes");
 
 const productRoutes = require("./product.routes");
 const supplierRoutes = require("./supplier.routes");
+const inventoryRoutes = require("./inventory.routes");
 
 const router = express.Router();
 
 router.get("/health",(req,res)=>{
 res.json({
 success:true,
-message:"Smart Inventory API running 🚀"
+message:"Smart Inventory API running "
 });
 });
 
@@ -20,5 +21,6 @@ router.use("/users",userRoutes);
 
 router.use("/products", productRoutes);
 router.use("/suppliers", supplierRoutes);
+router.use("/inventory", inventoryRoutes);
 
 module.exports = router;
