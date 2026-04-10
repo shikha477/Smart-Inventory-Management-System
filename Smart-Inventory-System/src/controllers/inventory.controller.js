@@ -82,3 +82,18 @@ exports.removeStock = asyncHandler(async (req, res) => {
     data: transaction,
   });
 });
+
+
+exports.getInventoryHistory = asyncHandler(async (req, res) => {
+
+  const history = await Inventory.find()
+    .populate("product", "name")
+    .populate("createdBy", "name email")
+    .sort({ createdAt: -1 });
+
+  res.status(200).json({
+    success: true,
+    count: history.length,
+    data: history,
+  });
+});
