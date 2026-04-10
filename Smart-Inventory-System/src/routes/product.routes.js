@@ -2,6 +2,9 @@ const express = require("express");
 
 const router = express.Router();
 
+const authMiddleware = require("../middleware/auth.middleware");
+const roleMiddleware = require("../middleware/role.middleware");
+
 const {
   createProduct,
   getProducts,
@@ -11,15 +14,41 @@ const {
 } = require("../controllers/product.controller");
 
 
-router.post("/", createProduct);
+router.post(
+  "/",
+  authMiddleware,
+  roleMiddleware("admin", "manager"),
+  createProduct
+);
 
-router.get("/", getProducts);
 
-router.get("/:id", getProductById);
+router.get(
+  "/",
+  authMiddleware,
+  getProducts
+);
 
-router.patch("/:id", updateProduct);
 
-router.delete("/:id", deleteProduct);
+router.get(
+  "/:id",
+  authMiddleware,
+  getProductById
+);
 
+
+router.patch(
+  "/:id",
+  authMiddleware,
+  roleMiddleware("admin", "manager"),
+  updateProduct
+);
+
+
+router.delete(
+  "/:id",
+  authMiddleware,
+  roleMiddleware("admin"),
+  deleteProduct
+);
 
 module.exports = router;
