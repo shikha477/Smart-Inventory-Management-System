@@ -40,3 +40,45 @@ exports.addStock = asyncHandler(async (req, res) => {
     data: transaction,
   });
 });
+
+
+exports.removeStock = asyncHandler(async (req, res) => {
+
+  const { productId, quantity, note } = req.body;
+
+  if (!productId || !quantity) {
+    throw new ApiError(400, "ProductId and quantity required");
+  }
+
+  const product = await Product.findById(productId);
+
+  if (!product) {
+    throw new ApiError(404, "Product not found");
+  }
+
+  if (product.stock < quantity) {
+    throw new ApiError(400, "Insufficient stock");
+  }
+
+  const previousStock = product.stock;
+  const newStock = previousStock - quantity;
+
+  product.stock = newStock;
+  await product.save();
+
+  const transaction = await Inventory.create({
+    product: productId,
+    type: "REMOVE",
+    quantity,
+    previousStock,
+    newStock,
+    note,
+    createdBy: req.user?._id,
+  });
+
+  res.status(200).json({
+    success: true,
+    message: "Stock removed successfully",
+    data: transaction,
+  });
+});
