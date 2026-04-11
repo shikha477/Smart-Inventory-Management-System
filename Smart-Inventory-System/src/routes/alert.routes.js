@@ -2,8 +2,9 @@ const express = require("express");
 const router = express.Router();
 
 const alertController = require("../controllers/alert.controller");
-const { protect } = require("../middleware/auth.middleware");
+const  protect  = require("../middleware/auth.middleware");
 const role = require("../middleware/role.middleware");
+
 
 
 router.get(
@@ -20,11 +21,7 @@ router.get(
   alertController.getLowStockAlerts
 );
 
-router.patch(
-  "/:id/read",
-  protect,
-  role("admin", "manager"),
-  alertController.markAlertAsRead
+router.patch("/:id/read",protect,role("admin", "manager"),alertController.markAlertAsRead
 );
 
 router.delete(
