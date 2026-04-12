@@ -10,9 +10,6 @@ const calculateMovingAverage = (salesArray) => {
   return sum / salesArray.length;
 };
 
-/*
- Detect sales trend
-*/
 const detectTrend = (salesArray) => {
   if (salesArray.length < 2) return "stable";
 
@@ -25,9 +22,6 @@ const detectTrend = (salesArray) => {
   return "stable";
 };
 
-/*
- Forecast single product
-*/
 exports.getProductForecast = asyncHandler(async (req, res) => {
 
   const { productId } = req.params;
@@ -72,9 +66,7 @@ exports.getProductForecast = asyncHandler(async (req, res) => {
 
 });
 
-/*
- Forecast all products
-*/
+
 exports.getAllForecast = asyncHandler(async (req, res) => {
 
   const products = await Product.find();
