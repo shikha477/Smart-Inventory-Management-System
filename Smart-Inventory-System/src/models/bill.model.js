@@ -29,6 +29,7 @@ const billItemSchema = new mongoose.Schema(
 
 const billSchema = new mongoose.Schema(
   {
+    customerName: String,
     billNumber: {
       type: String,
       required: true,
