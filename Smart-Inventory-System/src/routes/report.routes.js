@@ -13,3 +13,11 @@ router.get(
     roleMiddleware("admin"),
     reportController.getSalesReport
 )
+
+router.get(
+    "/inventory",
+    authMiddleware,
+    roleMiddleware("admin"),
+    reportController.getInventoryReport
+)
+
