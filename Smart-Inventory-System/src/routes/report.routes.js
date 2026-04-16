@@ -27,3 +27,10 @@ router.get(
     roleMiddleware("admin"),
     reportController.getLowStockReport
 )
+
+router.get(
+    "/export/pdf",
+    authMiddleware,
+    roleMiddleware("admin"),
+    reportController.exportPDF
+)
