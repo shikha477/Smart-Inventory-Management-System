@@ -21,3 +21,9 @@ router.get(
     reportController.getInventoryReport
 )
 
+router.get(
+    "/low-stock",
+    authMiddleware,
+    roleMiddleware("admin"),
+    reportController.getLowStockReport
+)
