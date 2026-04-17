@@ -34,3 +34,14 @@ router.get(
     roleMiddleware("admin"),
     reportController.exportPDF
 )
+
+router.get(
+    "/export/excel",
+    authMiddleware,
+    roleMiddleware("admin"),
+    reportController.exportExcel
+)
+
+
+
+module.exports = router
