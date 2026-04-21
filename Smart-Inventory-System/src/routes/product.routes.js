@@ -17,7 +17,7 @@ const {
 router.post(
   "/",
   authMiddleware,
-  roleMiddleware("admin", "manager"),
+  roleMiddleware("admin"),
   createProduct
 );
 
@@ -39,7 +39,7 @@ router.get(
 router.patch(
   "/:id",
   authMiddleware,
-  roleMiddleware("admin", "manager"),
+  roleMiddleware("admin"),
   updateProduct
 );
 

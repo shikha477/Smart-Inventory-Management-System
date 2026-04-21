@@ -9,35 +9,35 @@ const roleMiddleware = require("../middleware/role.middleware");
 router.get(
   "/overview",
   authMiddleware,
-  roleMiddleware("admin", "manager"),
+  roleMiddleware("admin"),
   analyticsController.getOverview
 );
 
 router.get(
   "/top-products",
   authMiddleware,
-  roleMiddleware("admin", "manager"),
+  roleMiddleware("admin"),
   analyticsController.getTopProducts
 );
 
 router.get(
   "/monthly-sales",
   authMiddleware,
-  roleMiddleware("admin", "manager"),
+  roleMiddleware("admin"),
   analyticsController.getMonthlySales
 );
 
 router.get(
   "/revenue",
   authMiddleware,
-  roleMiddleware("admin", "manager"),
+  roleMiddleware("admin"),
   analyticsController.getRevenue
 );
 
 router.get(
   "/inventory-value",
   authMiddleware,
-  roleMiddleware("admin", "manager"),
+  roleMiddleware("admin"),
   analyticsController.getInventoryValue
 );
 

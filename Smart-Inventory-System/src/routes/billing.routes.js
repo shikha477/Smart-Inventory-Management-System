@@ -9,21 +9,21 @@ const roleMiddleware = require("../middleware/role.middleware");
 router.post(
   "/",
   authMiddleware,
-  roleMiddleware("admin", "manager", "staff"),
+  roleMiddleware("admin", "staff"),
   billingController.createBill
 );
 
 router.get(
   "/",
   authMiddleware,
-  roleMiddleware("admin", "manager"),
+  roleMiddleware("admin"),
   billingController.getBills
 );
 
 router.get(
   "/:id",
   authMiddleware,
-  roleMiddleware("admin", "manager"),
+  roleMiddleware("admin"),
   billingController.getBillById
 );
 

@@ -10,18 +10,18 @@ const role = require("../middleware/role.middleware");
 router.get(
   "/",
   protect,
-  role("admin", "manager"),
+  role("admin"),
   alertController.getAllAlerts
 );
 
 router.get(
   "/low-stock",
   protect,
-  role("admin", "manager"),
+  role("admin"),
   alertController.getLowStockAlerts
 );
 
-router.patch("/:id/read",protect,role("admin", "manager"),alertController.markAlertAsRead
+router.patch("/:id/read",protect,role("admin"),alertController.markAlertAsRead
 );
 
 router.delete(

@@ -10,14 +10,14 @@ const role = require("../middleware/role.middleware");
 router.get(
   "/all",
   auth,
-  role("admin", "manager"),
+  role("admin"),
   forecastController.getAllForecast
 );
 
 router.get(
   "/:productId",
   auth,
-  role("admin", "manager"),
+  role("admin",),
   forecastController.getProductForecast
 );
 
