@@ -13,7 +13,7 @@ function Sidebar({ open = false, onNavigate }) {
     
   ];
 
-  if (["admin", "manager"].includes(user?.role)) {
+  if (["admin"].includes(user?.role)) {
     links.push(
       { to: "/alerts", label: "Alerts" },
       { to: "/analytics", label: "Analytics" },

@@ -71,7 +71,7 @@ function RegisterPage() {
         >
           <option value="admin">admin</option>
           <option value="staff">staff</option>
-          <option value="viewer">viewer</option>
+          
         </select>
 
         <button className="btn btn-primary" type="submit" disabled={loading}>

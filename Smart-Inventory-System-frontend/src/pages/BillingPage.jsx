@@ -16,8 +16,8 @@ function BillingPage() {
   const [loading, setLoading] = useState(true);
   const [status, setStatus] = useState({ kind: "", message: "" });
 
-  const canCreate = ["admin", "manager", "staff"].includes(user?.role);
-  const canView = ["admin", "manager"].includes(user?.role);
+  const canCreate = ["admin", "staff"].includes(user?.role);
+  const canView = ["admin", "staff"].includes(user?.role);
   const canDelete = user?.role === "admin";
 
   const loadData = async () => {

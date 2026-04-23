@@ -20,6 +20,13 @@ function AnalyticsPage() {
   const [revenue, setRevenue] = useState(0);
   const [inventoryValue, setInventoryValue] = useState(0);
 
+  const formatNumber = (value) => new Intl.NumberFormat("en-IN").format(Number(value) || 0);
+
+  const getMonthLabel = (monthNumber) => {
+    if (!monthNumber) return "-";
+    return new Date(2000, monthNumber - 1, 1).toLocaleString("en-US", { month: "short" });
+  };
+
   useEffect(() => {
     let active = true;
 
@@ -76,58 +83,89 @@ function AnalyticsPage() {
 
       <div className="cards-grid">
         <article className="data-card">
-          <h3>Products</h3>
-          <p>{overview?.totalProducts ?? 0}</p>
+          <h3>Total Products</h3>
+          <p>{formatNumber(overview?.totalProducts)}</p>
         </article>
         <article className="data-card">
-          <h3>Inventory Records</h3>
-          <p>{overview?.totalInventoryItems ?? 0}</p>
+          <h3>Total Inventory Items</h3>
+          <p>{formatNumber(overview?.totalInventoryItems)}</p>
         </article>
         <article className="data-card">
-          <h3>Bills</h3>
-          <p>{overview?.totalBills ?? 0}</p>
+          <h3>Total Bills</h3>
+          <p>{formatNumber(overview?.totalBills)}</p>
+        </article>
+        {/* <article className="data-card">
+          <h3>Overview Revenue</h3>
+          <p>{formatNumber(overview?.totalRevenue)}</p>
+        </article> */}
+        <article className="data-card">
+          <h3>Total Revenue</h3>
+          <p>{formatNumber(revenue)}</p>
         </article>
         <article className="data-card">
-          <h3>Revenue</h3>
-          <p>{revenue}</p>
-        </article>
-        <article className="data-card">
-          <h3>Inventory Value</h3>
-          <p>{inventoryValue}</p>
+          <h3>Total Inventory Value</h3>
+          <p>{formatNumber(inventoryValue)}</p>
         </article>
       </div>
 
       <div className="cards-grid two-col">
         <div className="panel">
-          <h3>Top Products</h3>
-          <ul className="detail-list">
-            {topProducts.map((item) => (
-              <li key={item.productId}>
-                {item.name}: Sold {item.totalSold}
-              </li>
-            ))}
-          </ul>
+          <h3>Top Products (By Quantity Sold)</h3>
+          <div className="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Rank</th>
+                  <th>Product</th>
+                  <th>Total Sold</th>
+                  <th>Product ID</th>
+                </tr>
+              </thead>
+              <tbody>
+                {topProducts.length ? (
+                  topProducts.map((item, index) => (
+                    <tr key={item.productId || index}>
+                      <td>{index + 1}</td>
+                      <td>{item.name || "-"}</td>
+                      <td>{formatNumber(item.totalSold)}</td>
+                      <td>{item.productId || "-"}</td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan="4">No top-products data found.</td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
         </div>
 
         <div className="panel">
-          <h3>Monthly Sales</h3>
+          <h3>Monthly Sales (Amount)</h3>
           <div className="table-wrap">
             <table>
               <thead>
                 <tr>
                   <th>Year</th>
                   <th>Month</th>
-                  <th>Total Sales</th>
+                  <th>Total Amount</th>
                 </tr>
               </thead>
               <tbody>
-                {monthlySales.map((item, index) => (
-                  <tr key={index}>
-                    <td>{item._id?.year}</td>
-                    <td>{item._id?.month}</td>
-                    <td>{item.totalSales}</td>
+                {monthlySales.length ? (
+                  monthlySales.map((item, index) => (
+                    <tr key={`${item._id?.year}-${item._id?.month}-${index}`}>
+                      <td>{item._id?.year || "-"}</td>
+                      <td>{getMonthLabel(item._id?.month)}</td>
+                      <td>{formatNumber(item.totalSales)}</td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan="3">No monthly-sales data found.</td>
                   </tr>
-                ))}
+                )}
               </tbody>
             </table>
           </div>

@@ -124,6 +124,8 @@ exports.inventorySummary = asyncHandler(async (req, res) => {
     }
   ]);
 
+  
+
   const totalTransactions = await Inventory.countDocuments();
 
   res.status(200).json({

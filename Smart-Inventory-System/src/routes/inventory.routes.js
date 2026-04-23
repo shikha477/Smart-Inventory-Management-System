@@ -37,7 +37,7 @@ router.get(
 router.get(
   "/summary",
   authMiddleware,
-  roleMiddleware("admin"),
+  roleMiddleware("admin", "staff"),
   inventoryController.inventorySummary
 );
 

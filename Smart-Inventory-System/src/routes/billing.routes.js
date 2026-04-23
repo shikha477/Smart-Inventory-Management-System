@@ -16,14 +16,14 @@ router.post(
 router.get(
   "/",
   authMiddleware,
-  roleMiddleware("admin"),
+  roleMiddleware("admin", "staff"),
   billingController.getBills
 );
 
 router.get(
   "/:id",
   authMiddleware,
-  roleMiddleware("admin"),
+  roleMiddleware("admin", "staff"),
   billingController.getBillById
 );
 

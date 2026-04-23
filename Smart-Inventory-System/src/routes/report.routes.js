@@ -10,35 +10,35 @@ const roleMiddleware = require("../middleware/role.middleware")
 router.get(
     "/sales",
     authMiddleware,
-    roleMiddleware("admin"),
+    roleMiddleware("admin", "staff"),
     reportController.getSalesReport
 )
 
 router.get(
     "/inventory",
     authMiddleware,
-    roleMiddleware("admin"),
+    roleMiddleware("admin", "staff"),
     reportController.getInventoryReport
 )
 
 router.get(
     "/low-stock",
     authMiddleware,
-    roleMiddleware("admin"),
+    roleMiddleware("admin", "staff"),
     reportController.getLowStockReport
 )
 
 router.get(
     "/export/pdf",
     authMiddleware,
-    roleMiddleware("admin"),
+    roleMiddleware("admin", "staff"),
     reportController.exportPDF
 )
 
 router.get(
     "/export/excel",
     authMiddleware,
-    roleMiddleware("admin"),
+    roleMiddleware("admin", "staff"),
     reportController.exportExcel
 )
 
