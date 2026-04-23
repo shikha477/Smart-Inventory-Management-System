@@ -10,6 +10,7 @@ function Sidebar({ open = false, onNavigate }) {
     { to: "/suppliers", label: "Suppliers" },
     { to: "/inventory", label: "Inventory" },
     { to: "/billing", label: "Billing" },
+    
   ];
 
   if (["admin", "manager"].includes(user?.role)) {
@@ -20,9 +21,14 @@ function Sidebar({ open = false, onNavigate }) {
     );
   }
 
+  // if (user?.role === "admin") {
+  //   links.push({ to: "/users", label: "Users" });
+  // }
   if (user?.role === "admin") {
-    links.push({ to: "/users", label: "Users" });
+    links.push({ to: "/reports", label: "Reports" }, { to: "/users", label: "Users" });
   }
+
+
 
   return (
     <aside className={`sidebar ${open ? "sidebar-open" : ""}`}>
