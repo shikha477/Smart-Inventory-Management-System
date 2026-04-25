@@ -37,7 +37,7 @@ function App() {
         <Route
           path="alerts"
           element={
-            <ProtectedRoute allowedRoles={["admin", "manager"]}>
+            <ProtectedRoute allowedRoles={["admin"]}>
               <AlertsPage />
             </ProtectedRoute>
           }
@@ -45,7 +45,7 @@ function App() {
         <Route
           path="analytics"
           element={
-            <ProtectedRoute allowedRoles={["admin", "manager"]}>
+            <ProtectedRoute allowedRoles={["admin"]}>
               <AnalyticsPage />
             </ProtectedRoute>
           }
@@ -53,7 +53,7 @@ function App() {
         <Route
           path="forecast"
           element={
-            <ProtectedRoute allowedRoles={["admin", "manager"]}>
+            <ProtectedRoute allowedRoles={["admin"]}>
               <ForecastPage />
             </ProtectedRoute>
           }
@@ -69,7 +69,7 @@ function App() {
         <Route
           path="reports"
           element={
-            <ProtectedRoute allowedRoles={["admin"]}>
+            <ProtectedRoute allowedRoles={["admin", "staff"]}>
               <ReportPage />
             </ProtectedRoute>
           }

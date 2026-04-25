@@ -10,6 +10,7 @@ function Sidebar({ open = false, onNavigate }) {
     { to: "/suppliers", label: "Suppliers" },
     { to: "/inventory", label: "Inventory" },
     { to: "/billing", label: "Billing" },
+    // { to: "/report", label: "Report" },
     
   ];
 
@@ -21,9 +22,10 @@ function Sidebar({ open = false, onNavigate }) {
     );
   }
 
-  // if (user?.role === "admin") {
-  //   links.push({ to: "/users", label: "Users" });
-  // }
+  if (["admin", "staff"].includes(user?.role)) {
+    links.push({ to: "/reports", label: "Reports" });
+  }
+  
   if (user?.role === "admin") {
     links.push({ to: "/reports", label: "Reports" }, { to: "/users", label: "Users" });
   }
