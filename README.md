@@ -1,2 +1,1 @@
 Smart Inventory Management System
-
