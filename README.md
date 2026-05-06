@@ -16,3 +16,24 @@ Context API (State Management)
 🔹 Other Tools
 PDF & Excel Report Generation
 Future Desktop Support via Electron
+
+📂 Project Structure
+Backend
+src/
+├── config/
+├── controllers/
+├── models/
+├── routes/
+├── middleware/
+├── services/
+├── utils/
+├── app.js
+└── server.js
+Frontend
+client/
+├── src/
+│   ├── components/
+│   ├── pages/
+│   ├── services/
+│   ├── context/
+│   └── utils/
